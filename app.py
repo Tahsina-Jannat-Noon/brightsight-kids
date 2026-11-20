@@ -45,7 +45,7 @@ BADGES = {
 EXPLAIN = {
     "PASS": ("Your child's eyes showed no signs needing immediate follow-up. This is a quick preventive check, not a replacement for a full eye exam.",
              "Next step: Repeat this check in 12 months, or sooner if you notice squinting or sitting close to screens."),
-    "REFER": ("This check detected a focusing pattern often linked to needing glasses. It is very common in children aged 2–17 and easily treated when caught early.",
+    "REFER": ("This check detected a focusing pattern often linked to needing glasses. It is very common in children aged 2-17 and easily treated when caught early.",
               "Next step: Book a comprehensive exam with an eye doctor within the next few weeks."),
     "dark": ("The image is too dark to read your child's eyes clearly.",
              "Next step: Turn on a soft, even room light and retake the photo."),
@@ -100,7 +100,7 @@ def result_card(status, reason=None):
 
 def tint(tile):
     t = np.kron(tile, np.ones((3, 3), np.uint8)).astype(float)
-    return np.stack([t * 0.25, t * 0.72, t], -1).astype(np.uint8)  # sleek sea-blue optical reflex tint
+    return np.stack([t * 0.25, t * 0.72, t], -1).astype(np.uint8)
 
 # ------------------------------------------------------------------ Anonymous Care-Loop State (Tab 2)
 ss = st.session_state
@@ -169,7 +169,8 @@ with tab_parent:
     st.markdown("<p style='font-weight:600;margin:.6rem 0 .3rem;color:#334155'>Or preview with a quick test scenario:</p>", unsafe_allow_html=True)
     for col, label in zip(st.columns(2) + st.columns(2), SAMPLE_RULES):
         if col.button(label, key=label, disabled=label not in samples):
-ss.active = label
+            ss.active = label
+
 drawer_data = None
 if ss.active == "photo" and photo is not None:
 g, s, br = q = photo_quality(photo)
@@ -193,7 +194,7 @@ st.button("I Understand & Booked an Eye Exam", key=f"p_ack_{cid}", on_click=act,
 drawer_data = dict(res=res, truth=truth)
 else:
 st.markdown(''
-'Take a photo above or select a quick test scenario to see your child's result.', unsafe_allow_html=True)
+"Take a photo above or select a quick test scenario to see your child's result.", unsafe_allow_html=True)
 with tab_clinical:
 cs = ss.cases
 st.markdown("#### Closed-Loop Referral Tracker (Screening → Glasses)")
@@ -262,4 +263,4 @@ m = bundle["metrics"]
 for col, (k, v) in zip(st.columns(4), [("ROC-AUC", m["roc_auc"]), ("Sensitivity", m["sensitivity"]),
 ("Specificity", m["specificity"]), ("MAE M (D)", m["MAE_D_accepted"]["M"])]):
 col.metric(k, f"{v:.2f}")
-st.caption("BrightSight Kids is a preventive screening aid for children ages 2–17, not a medical diagnosis.")
+st.caption("BrightSight Kids is a preventive screening aid for children ages 2-17, not a medical diagnosis.")
